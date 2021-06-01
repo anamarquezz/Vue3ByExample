@@ -1,0 +1,90 @@
+Setting up the Vue project with the Vue CLI and script tag
+There are several ways to create Vue projects or to add script tags to our existing frontends. For prototyping or learning purposes, we can add the latest version of Vue 3 by adding the following code:
+
+Copy
+<script src="https://unpkg.com/vue@next"></script>
+This will always include the latest version of Vue in our app. If we use it in production, we should include the version number to avoid unexpected changes from newer versions breaking our app. The version number can replace the next word if we want to specify the version.
+
+We can also install Vue by installing it as a package. To do that, we can run the following command:
+
+Copy
+npm install vue@next
+This will install the latest version of Vue in our JavaScript project.
+
+If we created a Vue project from scratch with an older version of the Vue CLI, then we can use the CLI to generate all the files and install all the packages for us. This is the easiest way to get started with a Vue project. With Vue 3, we should use Vue CLI v4.5 by running the following command:
+
+Copy
+yarn global add @vue/cli@next
+We can also install the Vue palate by running the following command:
+
+Copy
+npm install -g @vue/cli@next
+Then, to upgrade our Vue project to Vue 3, we can run the following command:
+
+Copy
+vue upgrade –-next
+The Vite build tool will let us create a Vue 3 project from scratch. It lets us serve our project much faster than with the Vue CLI because it can work with modules natively. We can set up a Vue project from scratch by running these commands with NPM:
+
+Copy
+$ npm init vite-app <project-name>
+$ cd <project-name>
+$ npm install
+$ npm run dev
+With Yarn, we must run the following commands:
+
+Copy
+$ yarn create vite-app <project-name>
+$ cd <project-name>
+$ yarn
+$ yarn dev
+In either case, we replace <project-name> with the project name of our choice.
+
+There are various builds of Vue that we can use. One set are CDN versions, which don't come with bundlers. We can recognize them by the vue(.runtime).global(.prod).js pattern in the filename. These can be included directly with script tags.
+
+We use them with templates that are directly added to the HTML. The vue.global.js file is the full build and includes both the compiler and the runtime, so it can compile templates on the fly from HTML. The vue.runtime.global.js file only contains the runtime and requires the template to be precompiled during a build step.
+
+The development and production branches are hardcoded, and we can tell them apart by checking if the file ends with .prod.js. These files are production ready as they're minified. These aren't Universal Module Definition (UMD) builds. They contain IIFEs that are meant to be used with regular script tags.
+
+If we use a bundler such as Webpack, Rollup, or Parcel, then we can use the vue(.runtime).esm-bundler.js file. The development and production branches are determined by the process.env.NODE_ENV property. It also has the full version, which compiles the template on the fly at runtime and a runtime version.
+
+In this chapter, we will be going through the basic features of Vue with the script tag version of Vue. In the subsequent chapters, we'll move on to using the Vue CLI to create our Vue 3 projects. This way, we can focus on exploring the basic features of Vue 3, which will be handy when we move on to creating more complex projects. Let's begin by creating a Vue instance.
+
+Creating your Vue instance
+Now that we have set up our Vue project, we can look at the Vue instance more closely. All Vue 3 apps have a Vue instance. The Vue instance serves as the entry point of the app. This means this is what is loaded first. It is the root component of the app, and it has a template and a component option object to control how the template is rendered in the browser.
+
+To create our first Vue 3 app, we must add the following code to the index.html file:
+
+Copy
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Vue App</title>
+    <script src="https://unpkg.com/vue@next"></script>
+  </head>
+  <body>
+    <div id="app">
+      count: {{ count }}
+    </div>
+    <script>
+      const Counter = {
+        data() {
+          return {
+            count: 0
+          };
+        }
+      };
+      Vue.createApp(Counter).mount("#app");
+    </script>
+  </body>
+</html>
+In our first Vue 3 app, we started by adding the script tag to add the Vue framework script. It's not final yet, so we added the next version of the Vue script.
+
+In the body, we have a div with the ID app, which we use to hold the template. The only content that is inside the template will be compiled by the template compiler that comes with Vue 3. Below that, we have a script tag to create our app. It provides the Counter object, which contains the properties we can use to create our app.
+
+Vue components come as objects that will be used by Vue to create any necessary components. The data property is a special property that returns the initial values of our states. The states are automatically reactive. The count state is a reactive state that we can update. It is the same one that's in the template. Anything in the curly braces must be some expression that contains reactive properties or other JavaScript expressions.
+
+If we add reactive states between the curly braces, then they will be updated. Since the count reactive property is initialized to 0, the count property is also 0 in the template. The Counter object is passed into the Vue.createApp method to compile the template and connect the reactive properties, to render the expression inside the curly braces as the final result. So, we should see count: 0 in our rendered output.
+
+The mount() method accepts a CSS selector string as its argument. The selector is the template to render the app in. Whatever is inside it will be considered Vue expressions, and they will be rendered accordingly. Expressions in curly braces will be rendered and attributes will be interpreted by Vue as props or directives, depending on how they are written.
+
+In the next section, we will look at the core features of Vue.js 3.
